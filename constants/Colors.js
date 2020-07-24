@@ -1,3 +1,4 @@
 export default {
-    header: '#fc9208'
+    header: '#f7287b',
+    add: '#33FF33'
 }
