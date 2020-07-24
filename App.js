@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+
+import EventNavigator from './navigation/EventNavigator';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Guerrilla App!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <EventNavigator />
   );
 }
 

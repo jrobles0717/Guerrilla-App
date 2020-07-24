@@ -1,19 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 const CreateEventScreen = props => {
     return (
-        <View style={styles.textContainer}>
-            <Text>Create Event Screen!</Text>
-        </View>
+        <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+            <View style={styles.textContainer}>
+                <Text>Create Event Screen!</Text>
+            </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     textContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
+        margin: 30
     }
 });
 

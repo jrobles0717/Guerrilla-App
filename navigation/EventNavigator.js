@@ -8,9 +8,9 @@ import MainPageScreen from '../screens/MainPageScreen';
 import Colors from '../constants/Colors';
 
 const EventNavigator = createStackNavigator({
+    MainPage: MainPageScreen,
     CreateEvent: CreateEventScreen,
-    EventDetail: EventDetailScreen,
-    MainPage: MainPageScreen
+    EventDetail: EventDetailScreen
 }, {
     defaultNavigationOptions: {
         headerStyle: {
