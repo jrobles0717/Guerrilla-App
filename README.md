@@ -5,8 +5,10 @@
 Antes de empezar a correr la aplicacion, debes añadir estas librerias al proyecto desde el terminal:
 
 1. ``` $ npm install react-navigation ```
-2.  ``` $ expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view ```
-3. ``` $ npm install react-navigation-stack @react-native-community/masked-view ```
+2. ``` $ npm install react-navigation-stack @react-native-community/masked-view ```
+3. ``` $ npm install react-redux ```
+4. ``` $ npm install redux ```
+5. ``` $ expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view ```
 
 Si luego de instalar estas librerias se activa un servidor de web, cancele el proceso presionando ctrl + C, y vuelva a correr este comando en el terminal:
 ```
