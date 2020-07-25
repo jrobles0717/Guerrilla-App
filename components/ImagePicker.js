@@ -41,8 +41,8 @@ const ImgPicker = props => {
     };
 
     return (
-        <View>
-            <View>
+        <View style={styles.imagePicker}>
+            <View style={styles.imagePreview}>
                 {!pickedImage ? (
                     <Text>No image picked yet.</Text>
                 ) : (

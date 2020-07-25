@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, ScrollView, Button, TextInput } from 'react-nat
 import { useDispatch } from 'react-redux';
 
 import Colors from '../constants/Colors';
+import CustomHeaderButton from '../components/CustomHeaderButton';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import ImagePicker from '../components/ImagePicker';
 
 const CreateEventScreen = props => {
     const [titleValue, setTitleValue] = useState('');
@@ -44,7 +47,7 @@ const CreateEventScreen = props => {
     }, []);
 
     return (
-        <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+        <ScrollView>
             <View style={styles.form}>
                 <Text style={styles.label}>Title</Text>
                 <TextInput 
@@ -76,10 +79,27 @@ const CreateEventScreen = props => {
                 onChangeText={nameChangeHandler}
                 value={nameValue}
                 />
-
+                <ImagePicker onImageTaken={imageTakenHandler}/>
             </View>
         </ScrollView>
     );
+};
+
+CreateEventScreen.navigationOptions = (navData) => {
+    return {
+        headerTitle: 'Create Event',
+        headerRight: () => 
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item 
+                title="Save"
+                iconName={Platform.OS === 'android' ? 'md-save' : 'ios-save'}
+                onPress={() => {
+                    navData.navigation.navigate('MainPage');
+                }}
+                color={Colors.add}
+                />
+            </HeaderButtons>
+    };
 };
 
 const styles = StyleSheet.create({
