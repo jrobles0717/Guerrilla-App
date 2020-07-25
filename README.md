@@ -22,6 +22,8 @@ Si luego de instalar estas librerias se activa un servidor de web, cancele el pr
 $ expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
 ```
 
+- Para empezar el proyecto debes entrar al folder del proyecto y luego correr ``` $ npm start ``` ó ``` $ yarn start ```
+
 ## Importante
 
 - Recuerda que la version que se esta utilizando para esta aplicacion de react navigation es la version 4. Para cuando se necesite buscar alguna referencia en la documentacion de react navigation.
