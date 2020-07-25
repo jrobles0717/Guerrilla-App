@@ -26,3 +26,5 @@ Recuerda que la version que se esta utilizando para esta aplicacion de react nav
 link de la pagina oficial de react navigation `https://reactnavigation.org/`
 
 Luego de ir a ver la documentacion, debes presionar donde dice 'Versions' en la parte de arriba de la pagina y despues seleccionar "4.x Documentation".
+
+link API expo packages `https://docs.expo.io/versions/latest/`
