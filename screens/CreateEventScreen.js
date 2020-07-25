@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import Colors from '../constants/Colors';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import * as eventsActions from '../store/actions/events';
 import ImagePicker from '../components/ImagePicker';
 
 const CreateEventScreen = props => {
@@ -46,6 +47,11 @@ const CreateEventScreen = props => {
         setSelectedLocation(location);
     }, []);
 
+    const saveEventHandler = () => {
+        dispatch(eventsActions.addEvent(titleValue, descriptionValue, dateValue, timeValue, nameValue, selectedImage, selectedLocation));
+        props.navigation.goBack();
+    };
+
     return (
         <ScrollView>
             <View style={styles.form}>
@@ -80,6 +86,11 @@ const CreateEventScreen = props => {
                 value={nameValue}
                 />
                 <ImagePicker onImageTaken={imageTakenHandler}/>
+                <Button 
+                title="Save Event"
+                color={Colors.add}
+                onPress={saveEventHandler}
+                />
             </View>
         </ScrollView>
     );
