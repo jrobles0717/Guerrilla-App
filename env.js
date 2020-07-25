@@ -1,5 +1,5 @@
 const vars = {
-    googleApiKey: 'API KEY FROM FIREBASE GOOGLE'
+    googleApiKey: 'AIzaSyCxKlOb3XH8xhv6zNzjOgrjro4KOxO8dkM'
 };
 
 export default vars;
