@@ -13,7 +13,9 @@ Antes de empezar a correr la aplicacion, debes añadir estas librerias al proyec
 7. ``` $ expo install expo-permissions ```
 8. ``` $ expo install expo-location ```
 9. ``` $ npm install redux-thunk ```
-10. ``` $ expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view ```
+10. ``` $ expo install expo-file-system ```
+11. ``` $ expo install expo-sqlite ```
+12. ``` $ expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view ```
 
 Si luego de instalar estas librerias se activa un servidor de web, cancele el proceso presionando ctrl + C, y vuelva a correr este comando en el terminal:
 ```
