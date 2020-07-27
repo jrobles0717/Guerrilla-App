@@ -1,16 +1,40 @@
-import React from 'react';
-import { ScrollView, View, Text, StyleSheet, Platform } from 'react-native';
-import CustomHeaderButton from '../components/CustomHeaderButton';
+import React, { useEffect } from 'react';
+import { FlatList, StyleSheet, Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useSelector, useDispatch } from 'react-redux';
+
+import CustomHeaderButton from '../components/CustomHeaderButton';
+import EventItem from '../components/EventItem';
+import * as eventsActions from '../store/actions/events';
 import Colors from '../constants/Colors';
 
 const MainPageScreen = props => {
+    const events = useSelector(state => state.events.events);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(eventsActions.loadEvents());
+    }, [dispatch]);
+
     return (
-        <ScrollView>
-            <View style={styles.textContainer}>
-                <Text>Events Screen!</Text>
-            </View>
-        </ScrollView>
+        <FlatList 
+        data={events}
+        keyExtractor={item => item.id}
+        renderItem={itemData => (
+            <EventItem 
+            image={itemData.item.image}
+            title={itemData.item.title}
+            date={itemData.item.date}
+            time={itemData.item.time}
+            onSelect={() => {
+                props.navigation.navigate('EventDetail', {
+                    eventTitle: itemData.item.title,
+                    eventId: itemData.item.id
+                });
+            }}
+            />
+        )}
+        />
     );
 };
 

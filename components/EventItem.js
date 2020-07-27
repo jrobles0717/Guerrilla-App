@@ -6,14 +6,16 @@ const EventItem = props => {
     return (
         <TouchableOpacity onPress={props.onSelect} style={styles.eventItem}>
             <Image style={styles.image} source={{ uri: props.image }}/>
-            <View style={styles.infoContainer}>
-                <Text style={styles.title}>{props.title}</Text>
-                <Text style={styles.date}>Start: {props.date}</Text>
-                <Text style={styles.time}>{props.time}</Text>
-            </View>
-            <View style={styles.confirmedContainer}>
-                <Text style={styles.participants}>Participants</Text>
-                <Text style={styles.numberConfirmed}>1</Text>
+            <View style={styles.container}>
+                <View style={styles.infoContainer}>
+                    <Text style={styles.title}>{props.title}</Text>
+                    <Text style={styles.date}>Start: {props.date}</Text>
+                    <Text style={styles.time}>{props.time}</Text>
+                </View>
+                <View style={styles.confirmedContainer}>
+                    <Text style={styles.participants}>Participants</Text>
+                    <Text style={styles.numberConfirmed}>1</Text>
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -37,8 +39,8 @@ const styles = StyleSheet.create({
         borderWidth: 1
     },
     infoContainer: {
-        marginLeft: 25,
-        width: 250,
+        marginLeft: 15,
+        width: 150,
         justifyContent: 'center',
         alignItems: 'flex-start' 
     },
@@ -56,22 +58,32 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     confirmedContainer: {
-        marginLeft: 25,
-        width: 250,
+        //marginLeft: 15,
+        width: 150,
         justifyContent: 'center',
-        alignItems: 'flex-start'
+        
     },
     participants: {
         color: 'black',
         fontSize: 14
     },
     numberConfirmed: {
-        width: 60,
-        height: 60,
-        borderRadius: 35,
-        backgroundColor: '#ccc',
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        //backgroundColor: '#ccc',
         borderColor: Colors.header,
-        borderWidth: 1
+        borderWidth: 3,
+        flex: 1,
+        fontSize: 36,
+        marginLeft: 15,
+        marginTop: 10,
+        paddingLeft: 12
+    },
+    container: {
+        flexDirection: "row",
+        alignItems: "center"
+        
     }
 });
 

@@ -6,11 +6,13 @@ import CreateEventScreen from '../screens/CreateEventScreen';
 import EventDetailScreen from '../screens/EventDetailScreen';
 import MainPageScreen from '../screens/MainPageScreen';
 import Colors from '../constants/Colors';
+import MapScreen from '../screens/MapScreen';
 
 const EventNavigator = createStackNavigator({
     MainPage: MainPageScreen,
     CreateEvent: CreateEventScreen,
-    EventDetail: EventDetailScreen
+    EventDetail: EventDetailScreen,
+    Map: MapScreen
 }, {
     defaultNavigationOptions: {
         headerStyle: {
