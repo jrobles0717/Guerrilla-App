@@ -7,6 +7,7 @@ import CustomHeaderButton from '../components/CustomHeaderButton';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import * as eventsActions from '../store/actions/events';
 import ImagePicker from '../components/ImagePicker';
+import LocationPicker from '../components/LocationPicker';
 
 const CreateEventScreen = props => {
     const [titleValue, setTitleValue] = useState('');
@@ -86,6 +87,10 @@ const CreateEventScreen = props => {
                 value={nameValue}
                 />
                 <ImagePicker onImageTaken={imageTakenHandler}/>
+                <LocationPicker 
+                navigation={props.navigation}
+                onLocationPicked={locationPickedHandler}
+                />
                 <Button 
                 title="Save Event"
                 color={Colors.add}
