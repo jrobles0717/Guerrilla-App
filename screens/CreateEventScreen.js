@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, Button, TextInput } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, Button, TextInput, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import Colors from '../constants/Colors';
 import CustomHeaderButton from '../components/CustomHeaderButton';
@@ -17,8 +18,48 @@ const CreateEventScreen = props => {
     const [nameValue, setNameValue] = useState('');
     const [selectedImage, setSelectedImage] = useState();
     const [selectedLocation, setSelectedLocation] = useState();
+    const [dateValue2, setDateValue2] = useState(new Date());
+    const [modeValue, setModeValue] = useState('dateValue2');
+    const [showValue, setShowValue] = useState(false);
+    const [isPickerVisible, setPickerVisible] = useState(false);
 
     const dispatch = useDispatch();
+
+    const today = new Date();
+    const dateString = new Date(today.getFullYear(), parseInt(today.getMonth()), today.getDate());
+    //console.log(dateString);
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || dateValue2;
+        setShowValue(Platform.OS === 'ios');
+        setDateValue2(currentDate);
+
+    };
+
+    const showMode = currentMode => {
+        setShowValue(true);
+        setModeValue(currentMode);
+    };
+
+    const showDatePicker = () => {
+        showMode('date');
+        setPickerVisible(true);
+    };
+
+    const hidePicker = () => {
+        setPickerVisible(false);
+    };
+
+    const handleConfirm = (date) => {
+        console.warn("A date has been picked: ", date);
+        setDateValue2(date);
+        hidePicker();
+    };
+
+    const showTimePicker = () => {
+        showMode('time');
+        setPickerVisible(true);
+    };
 
     const titleChangeHandler = text => {
         setTitleValue(text);
@@ -26,14 +67,6 @@ const CreateEventScreen = props => {
 
     const descriptionChangeHandler = text => {
         setDescriptionValue(text);
-    };
-
-    const dateChangeHandler = text => {
-        setDateValue(text);
-    };
-
-    const timeChangeHandler = text => {
-        setTimeValue(text);
     };
 
     const nameChangeHandler = text => {
@@ -49,7 +82,7 @@ const CreateEventScreen = props => {
     }, []);
 
     const saveEventHandler = () => {
-        dispatch(eventsActions.addEvent(titleValue, descriptionValue, dateValue, timeValue, nameValue, selectedImage, selectedLocation));
+        dispatch(eventsActions.addEvent(titleValue, descriptionValue, dateValue2.toDateString(), dateValue2.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), nameValue, selectedImage, selectedLocation));
         props.navigation.goBack();
     };
 
@@ -69,17 +102,30 @@ const CreateEventScreen = props => {
                 value={descriptionValue}
                 />
                 <Text style={styles.label}>Date</Text>
-                <TextInput 
-                style={styles.textInput}
-                onChangeText={dateChangeHandler}
-                value={dateValue}
-                />
+                <Text>{dateValue2.toDateString()}</Text>
+                <View>
+                    <Button onPress={showDatePicker} title="Pick Date" />
+                </View>
+                {showValue && (
+                    <DateTimePickerModal
+                    testID="dateTimePicker"
+                    value={dateValue2}
+                    mode={modeValue}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                    minimumDate={dateString}
+                    isVisible={isPickerVisible}
+                    onConfirm={handleConfirm}
+                    onCancel={hidePicker}
+                    date={dateValue2}
+                    />
+                )}
                 <Text style={styles.label}>Time</Text>
-                <TextInput 
-                style={styles.textInput}
-                onChangeText={timeChangeHandler}
-                value={timeValue}
-                />
+                <Text>{dateValue2.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
+                <View>
+                    <Button onPress={showTimePicker} title="Pick Time" />
+                </View>
                 <Text style={styles.label}>Name</Text>
                 <TextInput 
                 style={styles.textInput}
