@@ -16,7 +16,7 @@ Antes de empezar a correr la aplicacion, debes añadir estas librerias al proyec
 10. ``` $ expo install expo-file-system ```
 11. ``` $ expo install expo-sqlite ```
 12. ``` $ npm install react-native-maps --save-exact ```
-13. ``` $ npm install react-native-datepicker --save ```
+13. ``` $ expo install react-native-modal-datetime-picker @react-native-community/datetimepicker ```
 14. ``` $ expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view ```
 
 Si luego de instalar estas librerias se activa un servidor de web, cancele el proceso presionando ctrl + C, y vuelva a correr este comando en el terminal:
