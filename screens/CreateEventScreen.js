@@ -82,7 +82,15 @@ const CreateEventScreen = props => {
     }, []);
 
     const saveEventHandler = () => {
-        dispatch(eventsActions.addEvent(titleValue, descriptionValue, dateValue2.toDateString(), dateValue2.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), nameValue, selectedImage, selectedLocation));
+        dispatch(eventsActions.addEvent(
+            titleValue, 
+            descriptionValue, 
+            dateValue2.toDateString(), 
+            dateValue2.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), 
+            nameValue, 
+            selectedImage, 
+            selectedLocation
+        ));
         props.navigation.goBack();
     };
 
