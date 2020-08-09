@@ -14,7 +14,7 @@ const EventItem = props => {
                 </View>
                 <View style={styles.confirmedContainer}>
                     <Text style={styles.participants}>Participants</Text>
-                    <Text style={styles.numberConfirmed}>1</Text>
+                    <Text style={styles.numberConfirmed}>{props.numberConfirmed}</Text>
                 </View>
             </View>
         </TouchableOpacity>

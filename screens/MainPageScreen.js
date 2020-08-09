@@ -26,6 +26,7 @@ const MainPageScreen = props => {
             title={itemData.item.title}
             date={itemData.item.date}
             time={itemData.item.time}
+            numberConfirmed={itemData.item.name.length}
             onSelect={() => {
                 props.navigation.navigate('EventDetail', {
                     eventTitle: itemData.item.title,

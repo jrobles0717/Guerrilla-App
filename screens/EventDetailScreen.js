@@ -1,11 +1,15 @@
 import React from 'react';
-import { ScrollView, View, Image, Text, StyleSheet } from 'react-native';
+import { ScrollView, View, Image, Text, StyleSheet, Button, FlatList } from 'react-native';
 import MapPreview from '../components/MapPreview';
+import { useDispatch } from 'react-redux';
 
 import Colors from '../constants/Colors';
 import { useSelector } from 'react-redux';
 
 const EventDetailScreen = props => {
+    const dispatch = useDispatch();
+    //const events = useSelector(state => state.events.events);
+
     const eventId = props.navigation.getParam('eventId');
     const selectedEvent = useSelector( state => 
         state.events.events.find(event => event.id === eventId)
@@ -20,8 +24,17 @@ const EventDetailScreen = props => {
         });
     };
 
-    return (
-        <ScrollView>
+    const confirmButtonHandler = () => {
+        //dispatch();
+    };
+
+    const dummyData = {
+       name1: "name1"
+    };
+
+    const getHeader = () => {
+        return (
+            <>
             <View style={styles.form}>
                 <Text style={styles.label}>Title</Text>
                 <Text style={styles.textOutput}>{selectedEvent.title}</Text>
@@ -31,9 +44,41 @@ const EventDetailScreen = props => {
                 <Text style={styles.textOutput}>{selectedEvent.date}</Text>
                 <Text style={styles.label}>Time</Text>
                 <Text style={styles.textOutput}>{selectedEvent.time}</Text>
-                <Text style={styles.label}>Name</Text>
-                <Text style={styles.textOutput}>{selectedEvent.name}</Text>
+                <View style={styles.nameContainer}>
+                    <View>
+                        <Text style={styles.label}>Name</Text>
+                        <Text style={styles.textOutput}>{selectedEvent.name}</Text>
+                    </View>
+                    <View>
+                        <Button 
+                        title="Confirm to Event"
+                        onPress={confirmButtonHandler}
+                        color={Colors.sky}
+                        />
+                    </View>
+                </View>
             </View>
+            <Text style={styles.confirmedList}>Confirmed List</Text>
+            </>
+        );
+    };
+
+    const getFooter = () => {
+        return (
+            <View style={styles.form}>
+            <ScrollView>
+                <Text>Name1</Text>
+                <Text>Name2</Text>
+                <Text>Name3</Text>
+                <Text>Name4</Text>
+                <Text>Name5</Text>
+                <Text>Name6</Text>
+                <Text>Name7</Text>
+                <Text>Name8</Text>
+            </ScrollView>
+            {/* <FlatList 
+            data={events}
+            /> */}
             <Image source={{uri: selectedEvent.image}} style={styles.image}/>
             <View style={styles.locationContainer}>
                 <View style={styles.addressContainer}>
@@ -45,7 +90,62 @@ const EventDetailScreen = props => {
                 onPress={showMapHandler}
                 />
             </View>
-        </ScrollView>
+            </View>
+        );
+    };
+
+    return (
+        // <ScrollView>
+        //     <View style={styles.form}>
+        //         <Text style={styles.label}>Title</Text>
+        //         <Text style={styles.textOutput}>{selectedEvent.title}</Text>
+        //         <Text style={styles.label}>Description</Text>
+        //         <Text style={styles.textOutput}>{selectedEvent.description}</Text>
+        //         <Text style={styles.label}>Date</Text>
+        //         <Text style={styles.textOutput}>{selectedEvent.date}</Text>
+        //         <Text style={styles.label}>Time</Text>
+        //         <Text style={styles.textOutput}>{selectedEvent.time}</Text>
+        //         <View style={styles.nameContainer}>
+        //             <View>
+        //                 <Text style={styles.label}>Name</Text>
+        //                 <Text style={styles.textOutput}>{selectedEvent.name}</Text>
+        //             </View>
+        //             <View>
+        //                 <Button 
+        //                 title="Confirm to Event"
+        //                 onPress={confirmButtonHandler}
+        //                 color={Colors.sky}
+        //                 />
+        //             </View>
+        //         </View>
+        //     </View>
+        //     <Text>Confirmed List</Text>
+        //     <ScrollView>
+        //         <Text>Name1</Text>
+        //         <Text>Name2</Text>
+        //         <Text>Name3</Text>
+        //         <Text>Name4</Text>
+        //         <Text>Name5</Text>
+        //         <Text>Name6</Text>
+        //         <Text>Name7</Text>
+        //     </ScrollView>
+        //     <Image source={{uri: selectedEvent.image}} style={styles.image}/>
+        //     <View style={styles.locationContainer}>
+        //         <View style={styles.addressContainer}>
+        //             <Text style={styles.address}>{selectedEvent.address}</Text>
+        //         </View>
+        //         <MapPreview
+        //         style={styles.mapPreview} 
+        //         location={selectedLocation}
+        //         onPress={showMapHandler}
+        //         />
+        //     </View>
+        // </ScrollView>
+        <FlatList
+        //data={events}
+        ListHeaderComponent={getHeader}
+        ListFooterComponent={getFooter}
+        />
     );
 };
 
@@ -102,6 +202,16 @@ const styles = StyleSheet.create({
         height: 150,
         borderColor: '#ccc',
         borderWidth: 1
+      },
+      nameContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+      },
+      confirmedList: {
+          margin: 30,
+          fontSize: 18,
+        marginBottom: 15,
+        marginTop: 1
       }
 });
 
