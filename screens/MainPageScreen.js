@@ -7,6 +7,7 @@ import CustomHeaderButton from '../components/CustomHeaderButton';
 import EventItem from '../components/EventItem';
 import * as eventsActions from '../store/actions/events';
 import Colors from '../constants/Colors';
+import * as CreateEvent from '../screens/CreateEventScreen';
 
 const MainPageScreen = props => {
     const events = useSelector(state => state.events.events);
@@ -14,7 +15,16 @@ const MainPageScreen = props => {
 
     useEffect(() => {
         dispatch(eventsActions.loadEvents());
+        //console.log(CreateEvent.WebSQLResultSet);
     }, [dispatch]);
+
+    const listLength = () => {
+        let count = 0;
+        for (let person of CreateEvent.nameValue) {
+            count++;
+        }
+        return count;
+    };
 
     return (
         <FlatList 

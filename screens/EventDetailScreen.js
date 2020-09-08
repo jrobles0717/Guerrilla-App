@@ -1,5 +1,5 @@
-import React from 'react';
-import { ScrollView, View, Image, Text, StyleSheet, Button, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, View, Image, Text, StyleSheet, Button, FlatList, TextInput } from 'react-native';
 import MapPreview from '../components/MapPreview';
 import { useDispatch } from 'react-redux';
 
@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 const EventDetailScreen = props => {
     const dispatch = useDispatch();
     //const events = useSelector(state => state.events.events);
+    const [nameValue, setNameValue] = useState([]);
+    const [query, setQuery] = useState("");
 
     const eventId = props.navigation.getParam('eventId');
     const selectedEvent = useSelector( state => 
@@ -28,8 +30,9 @@ const EventDetailScreen = props => {
         //dispatch();
     };
 
-    const dummyData = {
-       name1: "name1"
+    const nameChangeHandler = text => {
+        //setNameValue(text);
+        setNameValue(searches => searches.concat(query));
     };
 
     const getHeader = () => {
@@ -47,7 +50,11 @@ const EventDetailScreen = props => {
                 <View style={styles.nameContainer}>
                     <View>
                         <Text style={styles.label}>Name</Text>
-                        <Text style={styles.textOutput}>{selectedEvent.name}</Text>
+                        <TextInput 
+                            style={styles.textInput}
+                            onChangeText={nameChangeHandler}
+                            value={nameValue}
+                        />
                     </View>
                     <View>
                         <Button 
@@ -66,7 +73,8 @@ const EventDetailScreen = props => {
     const getFooter = () => {
         return (
             <View style={styles.form}>
-            <ScrollView>
+            <Text style={styles.textOutput}>{selectedEvent.name}</Text>
+            {/* <ScrollView>
                 <Text>Name1</Text>
                 <Text>Name2</Text>
                 <Text>Name3</Text>
@@ -75,7 +83,7 @@ const EventDetailScreen = props => {
                 <Text>Name6</Text>
                 <Text>Name7</Text>
                 <Text>Name8</Text>
-            </ScrollView>
+            </ScrollView> */}
             {/* <FlatList 
             data={events}
             /> */}
