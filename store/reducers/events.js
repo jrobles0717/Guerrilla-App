@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
                 )
             };
         case ADD_EVENT:
-            const newEvent = new Place(
+            const newEvent = new Event(
                 action.eventData.id.toString(),
                 action.eventData.title,
                 action.eventData.description,
