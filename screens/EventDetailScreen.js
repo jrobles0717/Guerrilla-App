@@ -10,7 +10,7 @@ const EventDetailScreen = props => {
     const dispatch = useDispatch();
     //const events = useSelector(state => state.events.events);
     const [nameValue, setNameValue] = useState([]);
-    const [query, setQuery] = useState("");
+    const [newName, setNewName] = useState('');
 
     const eventId = props.navigation.getParam('eventId');
     const selectedEvent = useSelector( state => 
@@ -28,11 +28,15 @@ const EventDetailScreen = props => {
 
     const confirmButtonHandler = () => {
         //dispatch();
+        setNameValue([newName, ...nameValue]);
+        setNewName('');
     };
 
     const nameChangeHandler = text => {
         //setNameValue(text);
-        setNameValue(searches => searches.concat(query));
+        //setNameValue(searches => searches.concat(query));
+        //setNameValue(searches => searches.concat(text));
+        setNameValue(text);
     };
 
     const getHeader = () => {
@@ -51,9 +55,9 @@ const EventDetailScreen = props => {
                     <View>
                         <Text style={styles.label}>Name</Text>
                         <TextInput 
-                            style={styles.textInput}
-                            onChangeText={nameChangeHandler}
-                            value={nameValue}
+                            style={styles.textOutput}
+                            onChangeText={e => setNewName(e)}
+                            value={newName}
                         />
                     </View>
                     <View>

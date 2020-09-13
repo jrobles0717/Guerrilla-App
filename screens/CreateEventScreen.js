@@ -16,7 +16,7 @@ const CreateEventScreen = props => {
     const [dateValue, setDateValue] = useState('');
     const [timeValue, setTimeValue] = useState('');
     const [nameValue, setNameValue] = useState([]);
-    const [query, setQuery] = useState("");
+    const [newName, setNewName] = useState('');
     const [selectedImage, setSelectedImage] = useState();
     const [selectedLocation, setSelectedLocation] = useState();
     const [dateValue2, setDateValue2] = useState(new Date());
@@ -70,9 +70,12 @@ const CreateEventScreen = props => {
         setDescriptionValue(text);
     };
 
-    const nameChangeHandler = text => {
+    const nameChangeHandler = (text) => {
         //setNameValue(text);
-        setNameValue(searches => searches.concat(query));
+        //setNameValue(searches => searches.concat(text));
+        //setNameValue(text);
+        setNewName(text);
+        setNameValue([nameValue, newName]);
     };
 
     const imageTakenHandler = imagePath => {
@@ -140,7 +143,7 @@ const CreateEventScreen = props => {
                 <TextInput 
                 style={styles.textInput}
                 onChangeText={nameChangeHandler}
-                value={nameValue}
+                value={newName}
                 />
                 <ImagePicker onImageTaken={imageTakenHandler}/>
                 <LocationPicker 
