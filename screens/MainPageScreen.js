@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { FlatList, StyleSheet, Platform } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { FlatList, StyleSheet, Platform, View, Text } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector, useDispatch } from 'react-redux';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import EventItem from '../components/EventItem';
@@ -12,22 +13,41 @@ import * as CreateEvent from '../screens/CreateEventScreen';
 const MainPageScreen = props => {
     const events = useSelector(state => state.events.events);
     const dispatch = useDispatch();
+    const [eventId, setEventId] = useState(null);
+
+
+    const eventOpenHandler = () => {
+        console.log("Open swipe event!! event ID: " + eventId);
+        //setEventId( );
+    };
+
+    const eventCloseHandler = () => {
+        setEventId(null);
+        console.log("Close swipe event!! event ID: " + eventId);
+        //setEventId( );
+    };
+
+    const deleteEventHandler = useCallback((itemData) => {
+        setEventId(itemData);
+        console.log("deleting event!! ");
+
+        //dispatch(eventsActions.deleteEvent(eventId));
+        //props.navigation.reload();
+    },[]);
+
+    useEffect(() => {
+        console.log("event id deleted: " + eventId);
+        dispatch(eventsActions.deleteEvent(eventId));
+        dispatch(eventsActions.loadEvents());
+    },[eventId]);
 
     useEffect(() => {
         dispatch(eventsActions.loadEvents());
         //console.log(CreateEvent.WebSQLResultSet);
     }, [dispatch]);
 
-    const listLength = () => {
-        let count = 0;
-        for (let person of CreateEvent.nameValue) {
-            count++;
-        }
-        return count;
-    };
-
     return (
-        <FlatList 
+        <SwipeListView 
         data={events}
         keyExtractor={item => item.id}
         renderItem={itemData => (
@@ -45,6 +65,28 @@ const MainPageScreen = props => {
             }}
             />
         )}
+        renderHiddenItem={itemData => (
+            <View style={styles.trashIcon}>
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item 
+                title="Delete Event"
+                iconName={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+                onPress={() => {
+                    //dispatch(eventsActions.deleteEvent(nameValue));
+                    //navData.navigation.navigate('CreateEvent');
+                    deleteEventHandler(itemData.item.id);
+                    //console.log("event id to delete: " + eventId);
+                }}
+                //style={styles.trashIcon}
+                color={Colors.delete}
+                />
+                </HeaderButtons>
+            </View>
+        )}
+        onRowOpen={eventOpenHandler}
+        onRowClose={eventCloseHandler}
+        leftOpenValue={105}
+        rightOpenValue={0}
         />
     );
 };
@@ -72,6 +114,17 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         margin: 30
+    },
+    trashIcon: {
+        padding: 25,
+        //paddingBottom: 60,
+        //paddingTop: 15, 
+        marginLeft: 2,
+        marginBottom: 2,
+        flexDirection: "row", 
+        width: 100, 
+        justifyContent: "center", 
+        backgroundColor: "pink"
     }
 });
 

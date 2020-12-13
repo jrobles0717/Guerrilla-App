@@ -1,9 +1,11 @@
 import * as FileSystem from 'expo-file-system';
-import { insertEvent, fetchEvents } from '../../helpers/db';
+import { insertEvent, fetchEvents, updatesEvent, removeEvent } from '../../helpers/db';
 import ENV from '../../env';
 
 export const ADD_EVENT = 'ADD_EVENT';
+export const DELETE_EVENT = 'DELETE_EVENT';
 export const SET_EVENTS = 'SET_EVENTS';
+export const UPDATE_EVENT = 'UPDATE_EVENT';
 
 export const addEvent = (title, description, date, time, name, image, location) => {
     return async dispatch => {
@@ -58,6 +60,47 @@ export const addEvent = (title, description, date, time, name, image, location) 
                         lat: location.lat,
                         lng: location.lng
                     }
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    };
+};
+
+export const deleteEvent = (id) => {
+    return async dispatch => {
+        
+
+        try {
+            const dbResult = await removeEvent(id);
+            console.log(dbResult);
+            dispatch({
+                type: DELETE_EVENT,
+                eventData: {
+                    id: dbResult.insertId
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    };
+};
+
+export const updateEvent = (name) => {
+    return async dispatch => {
+        
+        try {
+            
+            const dbResult = await updatesEvent(name);
+            console.log(dbResult);
+            dispatch({
+                type: UPDATE_EVENT,
+                eventData: {
+                    id: dbResult.insertId,
+                    name: name
                 }
             });
         } catch (err) {

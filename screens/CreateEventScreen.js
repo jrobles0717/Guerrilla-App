@@ -10,7 +10,7 @@ import * as eventsActions from '../store/actions/events';
 import ImagePicker from '../components/ImagePicker';
 import LocationPicker from '../components/LocationPicker';
 
-const CreateEventScreen = props => {
+export const CreateEventScreen = props => {
     const [titleValue, setTitleValue] = useState('');
     const [descriptionValue, setDescriptionValue] = useState('');
     const [dateValue, setDateValue] = useState('');
@@ -75,7 +75,6 @@ const CreateEventScreen = props => {
         //setNameValue(searches => searches.concat(text));
         //setNameValue(text);
         setNewName(text);
-        setNameValue([nameValue, newName]);
     };
 
     const imageTakenHandler = imagePath => {
@@ -87,6 +86,8 @@ const CreateEventScreen = props => {
     }, []);
 
     const saveEventHandler = () => {
+
+        //setNameValue([...nameValue, newName]);
         dispatch(eventsActions.addEvent(
             titleValue, 
             descriptionValue, 
@@ -98,6 +99,15 @@ const CreateEventScreen = props => {
         ));
         props.navigation.goBack();
     };
+
+    useEffect(() => {
+        console.log("selected location: " + JSON.stringify(selectedLocation));
+    },[selectedLocation])
+
+    useEffect(() => {
+        console.log("name string is: " + newName);
+        console.log("name list is: " + nameValue);
+    },[nameValue, newName]);
 
     return (
         <ScrollView>

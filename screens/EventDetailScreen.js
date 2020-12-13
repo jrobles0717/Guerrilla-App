@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { ScrollView, View, Image, Text, StyleSheet, Button, FlatList, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, View, Image, Text, StyleSheet, Button, FlatList, TextInput, Alert } from 'react-native';
 import MapPreview from '../components/MapPreview';
 import { useDispatch } from 'react-redux';
+import * as eventsActions from '../store/actions/events';
+import * as createEvent from './CreateEventScreen';
 
 import Colors from '../constants/Colors';
 import { useSelector } from 'react-redux';
@@ -17,6 +19,23 @@ const EventDetailScreen = props => {
         state.events.events.find(event => event.id === eventId)
     );
 
+    const idEvent = JSON.stringify(selectedEvent.id);
+
+    useEffect(() =>{
+            console.log("selected Event: " + JSON.stringify(selectedEvent));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.id));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.title));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.description));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.date));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.time));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.name));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.image));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.address));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.lat));
+            console.log("selected Event: " + JSON.stringify(selectedEvent.lng));
+            console.log("idEvent: " + idEvent);
+    },[]);
+
     const selectedLocation = { lat: selectedEvent.lat, lng: selectedEvent.lng };
 
     const showMapHandler =() => {
@@ -28,16 +47,47 @@ const EventDetailScreen = props => {
 
     const confirmButtonHandler = () => {
         //dispatch();
-        setNameValue([newName, ...nameValue]);
-        setNewName('');
+        if(newName != ""){
+            setNameValue([...nameValue, newName]);
+            console.log("nameValue is: " + nameValue);
+            console.log("newName is: " + newName);
+            setNewName('');
+
+            dispatch(eventsActions.updateEvent(idEvent, nameValue));
+            //props.navigation.goBack();
+        } else {
+            Alert.alert(
+                'Oops! You have must enter a name.',
+                'Please try again!!',
+                [
+                    {text: 'OK', onPress: () => console.log('OK button has been clicked')}
+                ],
+                {
+                    cancelable: true
+                }
+            );
+        }
+
+        // console.log("using createEvent to get titleValue: " + createEvent.CreateEventScreen);
+        
     };
 
     const nameChangeHandler = text => {
         //setNameValue(text);
         //setNameValue(searches => searches.concat(query));
         //setNameValue(searches => searches.concat(text));
-        setNameValue(text);
+        setNewName(text);
     };
+
+    useEffect(() => {
+        console.log("the array names: " + nameValue);
+        console.log("the length of the array is: " + nameValue.length);
+    }, [nameValue]);
+
+    useEffect(() => {
+        console.log("the created name list is: " + selectedEvent.name);
+        setNameValue(selectedEvent.name);
+    },[])
 
     // const getHeader = () => {
     //     return (
@@ -123,7 +173,7 @@ const EventDetailScreen = props => {
                         <TextInput 
                             style={styles.textOutput}
                             onChangeText={nameChangeHandler}
-                            value={nameValue}
+                            value={newName}
                         />
                     </View>
                     <View>
@@ -143,7 +193,8 @@ const EventDetailScreen = props => {
                 <Text>Name5</Text>
                 <Text>Name6</Text>
                 <Text>Name7</Text> */}
-                <Text style={styles.textOutput}>{selectedEvent.name}</Text>
+                <Text style={styles.textOutput}>{nameValue}</Text>
+                
             <Image source={{uri: selectedEvent.image}} style={styles.image}/>
             <View style={styles.locationContainer}>
                 <View style={styles.addressContainer}>

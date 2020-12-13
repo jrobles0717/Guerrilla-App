@@ -1,4 +1,4 @@
-import { ADD_EVENT, SET_EVENTS } from '../actions/events';
+import { ADD_EVENT, SET_EVENTS, UPDATE_EVENT, DELETE_EVENT } from '../actions/events';
 import Event from '../../models/event';
 
 const initialState = {
@@ -6,6 +6,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+    const newState = {...state};
     switch (action.type) {
         case SET_EVENTS:
             return {
@@ -41,7 +42,43 @@ export default (state = initialState, action) => {
             return {
                 events: state.events.concat(newEvent)
             };
-            default:
-                return state;
+        case DELETE_EVENT:
+            const indexD = state.events.findIndex(e => e.id === action.eventData.id);
+            return [
+                ...state.events.slice(0, indexD),
+                ...state.events.slice(indexD + 1)
+            ];
+        // case UPDATE_EVENT:
+        //     const findEvent = state.find(e => action.eventData.id.toString() === e.id);
+        //     console.log("findEvent: " + findEvent);
+        //     const update = {...findEvent, name: action.eventData.name};
+        //     console.log("updated Event: " + update);
+        //     return {
+        //         events: [...state.events, update]
+        //     };
+        case UPDATE_EVENT:
+            const indexU = state.events.findIndex(e => e.id === action.eventData.id);
+            const updatedEvent = {...action.eventData, events: state.events[indexU].name};
+            return {
+                ...state.events.slice(0, indexU),
+                updatedEvent,
+                ...state.events.slice(indexU + 1)
+                        
+            };
+            // return [
+            //     state.events.map(e => {
+            //         if(e.id === action.eventData.id) {
+            //             return {
+            //                 ...e,
+            //                 events: action.eventData.name
+            //             }
+            //         }
+            //         else {
+            //             return e;
+            //         }
+            //     })
+            // ];
+        default:
+            return state;
     }
 };

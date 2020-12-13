@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Colors from '../constants/Colors';
 
+const width = Dimensions.get("window").width
+
 const EventItem = props => {
+
     return (
         <TouchableOpacity onPress={props.onSelect} style={styles.eventItem}>
             <Image style={styles.image} source={{ uri: props.image }}/>
@@ -28,7 +31,12 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal: 30,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        //padding: 10,
+        borderWidth: 1, 
+        width: width,
+        backgroundColor: "green"
+        
     },
     image: {
         width: 70,
@@ -82,7 +90,11 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        // padding: 10,
+        // borderWidth: 1, 
+        // width: width,
+        // backgroundColor: "green"
         
     }
 });
