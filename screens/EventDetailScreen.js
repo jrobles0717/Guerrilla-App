@@ -45,16 +45,14 @@ const EventDetailScreen = props => {
         });
     };
 
-    const confirmButtonHandler = () => {
-        //dispatch();
+    const nameValueHandler = () => {
+
         if(newName != ""){
             setNameValue([...nameValue, newName]);
-            console.log("nameValue is: " + nameValue);
-            console.log("newName is: " + newName);
+            console.log("nameValue in nameValueHandler is: " + nameValue);
+            console.log("newName in nameValueHandler is: " + newName);
             setNewName('');
 
-            dispatch(eventsActions.updateEvent(idEvent, nameValue));
-            //props.navigation.goBack();
         } else {
             Alert.alert(
                 'Oops! You have must enter a name.',
@@ -67,7 +65,21 @@ const EventDetailScreen = props => {
                 }
             );
         }
+    };
 
+    const confirmButtonHandler = () => {
+
+        nameValueHandler();
+        console.log("nameValue in confirmButtonHandler is:" + nameValue);
+        console.log("idEvent before dispatching action: " + idEvent + " and nameValue: " + nameValue);
+        //dispatch(eventsActions.searchedIdEvent(idEvent));
+        //const result = dispatch(eventsActions.searchedIdEvent(idEvent));
+        //console.log("result function searchIdEvent: " + JSON.stringify(result));
+        // if (result) {
+        //     dispatch(eventsActions.updateEvent(idEvent, nameValue));
+        // } 
+        //dispatch(eventsActions.updateEvent(idEvent, nameValue));
+        //props.navigation.goBack();
         // console.log("using createEvent to get titleValue: " + createEvent.CreateEventScreen);
         
     };
@@ -82,12 +94,14 @@ const EventDetailScreen = props => {
     useEffect(() => {
         console.log("the array names: " + nameValue);
         console.log("the length of the array is: " + nameValue.length);
+        if (nameValue.length > 0) {
+            dispatch(eventsActions.updateEvent(idEvent, nameValue));
+        } 
     }, [nameValue]);
 
-    useEffect(() => {
-        console.log("the created name list is: " + selectedEvent.name);
-        setNameValue(selectedEvent.name);
-    },[])
+    // useEffect(() => {
+    //     setNameValue(selectedEvent.name);
+    // },[])
 
     // const getHeader = () => {
     //     return (
@@ -193,7 +207,9 @@ const EventDetailScreen = props => {
                 <Text>Name5</Text>
                 <Text>Name6</Text>
                 <Text>Name7</Text> */}
-                <Text style={styles.textOutput}>{nameValue}</Text>
+                <Text style={styles.textOutput}>{nameValue.length != 0 
+                ? (nameValue.map((e) => e + ", ")) 
+                : (<Text>No name yet in the list!!</Text>)}</Text>
                 
             <Image source={{uri: selectedEvent.image}} style={styles.image}/>
             <View style={styles.locationContainer}>

@@ -1,4 +1,4 @@
-import { ADD_EVENT, SET_EVENTS, UPDATE_EVENT, DELETE_EVENT } from '../actions/events';
+import { ADD_EVENT, SET_EVENTS, UPDATE_EVENT, DELETE_EVENT, SEARCH_ID_EVENT } from '../actions/events';
 import Event from '../../models/event';
 
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
     const newState = {...state};
+    console.log("action of events[] in reducers: " + JSON.stringify(action.eventData), action.type);
     switch (action.type) {
         case SET_EVENTS:
             return {
@@ -36,7 +37,7 @@ export default (state = initialState, action) => {
                 action.eventData.name,
                 action.eventData.image,
                 action.eventData.address,
-                action.eventData.coords.lat,
+                action.eventData.coords.lat, 
                 action.eventData.coords.lng
             );
             return {
@@ -56,15 +57,76 @@ export default (state = initialState, action) => {
         //     return {
         //         events: [...state.events, update]
         //     };
-        case UPDATE_EVENT:
-            const indexU = state.events.findIndex(e => e.id === action.eventData.id);
-            const updatedEvent = {...action.eventData, events: state.events[indexU].name};
+        case SEARCH_ID_EVENT:
             return {
-                ...state.events.slice(0, indexU),
-                updatedEvent,
-                ...state.events.slice(indexU + 1)
+                events: state.events.map(item => {
+                    if (item.id === action.eventData.id) {  // Match the item by id and update its name
+                      return {
+                        events: action.events.map(
+                            ev =>
+                            new Event(
+                                ev.id.toString(),
+                                ev.title,
+                                ev.description,
+                                ev.date,
+                                ev.time,
+                                ev.name,
+                                ev.image,
+                                ev.address,
+                                ev.lat,
+                                ev.lng
+                            )
+                        )
+                      };
+                    }
+                    return item;
+                  })
+            }
+
+        case UPDATE_EVENT:
+
+            // return {
+            //     events: state.events.map(item => {
+            //         if (item.id === action.eventData.id) {  // Match the item by id and update its name
+            //           return {
+            //             ...item,
+            //             name: action.eventData.name
+            //           };
+            //         }
+            //         return item;
+            //       })
+            // }
+
+            // const indexU = state.events.findIndex(e => e.id === action.eventData.id);
+            // const indexU = state.events.map(item => {
+            //             if (item.id === action.eventData.id) {  // Match the item by id and update its name
+            //               return 
+            //                 action.eventData.name;
+            //             }
+            //             else {
+            //                 console.log("no found id event in reducers");
+            //             }
+            //           })
+            // const updatedEvent = {...action.eventData, name: indexU};
+            const findEvent = state.events.find(e => e.id === action.eventData.id);
+            console.log("findEvent in reducers: " + JSON.stringify(findEvent));
+            return {
+                ...state,
+                events: state.events.map(events => events.id === action.eventData.id ?
+                    { ...events, name: action.eventData.name} : 
+                    events
+                    )
                         
             };
+
+            // const index = state.events.findIndex(e => e.id === action.eventData.id);
+            // const newArray = [...state.events];
+
+            // return {
+            //     ...state,
+            //     events: newArray
+            // }
+
             // return [
             //     state.events.map(e => {
             //         if(e.id === action.eventData.id) {

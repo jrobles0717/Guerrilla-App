@@ -1,11 +1,12 @@
 import * as FileSystem from 'expo-file-system';
-import { insertEvent, fetchEvents, updatesEvent, removeEvent } from '../../helpers/db';
+import { insertEvent, fetchEvents, updatesEvent, removeEvent, searchIdEvent, fetchIdEvents } from '../../helpers/db';
 import ENV from '../../env';
 
 export const ADD_EVENT = 'ADD_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
 export const SET_EVENTS = 'SET_EVENTS';
 export const UPDATE_EVENT = 'UPDATE_EVENT';
+export const SEARCH_ID_EVENT = 'SEARCH_ID_EVENT';
 
 export const addEvent = (title, description, date, time, name, image, location) => {
     return async dispatch => {
@@ -89,13 +90,33 @@ export const deleteEvent = (id) => {
     };
 };
 
-export const updateEvent = (name) => {
+export const searchedIdEvent = (id) => {
     return async dispatch => {
         
         try {
             
-            const dbResult = await updatesEvent(name);
+            const dbResult = await fetchIdEvents(id);
             console.log(dbResult);
+            dispatch({
+                type: SEARCH_ID_EVENT,
+                eventData: {
+                    id: dbResult.insertId
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    };
+};
+
+export const updateEvent = (id, name) => {
+    return async dispatch => {
+        
+        try {
+            
+            const dbResult = await updatesEvent(id, name);
+            console.log("dbResult from actions file: " + JSON.stringify(dbResult));
             dispatch({
                 type: UPDATE_EVENT,
                 eventData: {
