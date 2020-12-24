@@ -1,4 +1,5 @@
-import { ADD_EVENT, SET_EVENTS, UPDATE_EVENT, DELETE_EVENT, SEARCH_ID_EVENT } from '../actions/events';
+import { ADD_EVENT, DELETE_EVENT, SEARCH_ID_EVENT, SET_EVENTS, UPDATE_EVENT } from '../actions/events';
+
 import Event from '../../models/event';
 
 const initialState = {
@@ -50,10 +51,10 @@ export default (state = initialState, action) => {
                 ...state.events.slice(indexD + 1)
             ];
         // case UPDATE_EVENT:
-        //     const findEvent = state.find(e => action.eventData.id.toString() === e.id);
+        //     const findEvent = state.events.find(e => action.eventData.id === e.id);
         //     console.log("findEvent: " + findEvent);
         //     const update = {...findEvent, name: action.eventData.name};
-        //     console.log("updated Event: " + update);
+        //     console.log("updated Event: " + JSON.stringify(update));
         //     return {
         //         events: [...state.events, update]
         //     };
@@ -108,8 +109,9 @@ export default (state = initialState, action) => {
             //             }
             //           })
             // const updatedEvent = {...action.eventData, name: indexU};
+
             const findEvent = state.events.find(e => e.id === action.eventData.id);
-            console.log("findEvent in reducers: " + JSON.stringify(findEvent));
+            console.log("findEvent in reducers: " + findEvent);
             return {
                 ...state,
                 events: state.events.map(events => events.id === action.eventData.id ?

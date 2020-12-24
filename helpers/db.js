@@ -102,7 +102,7 @@ export const searchIdEvent = (id) => {
 export const updatesEvent = (id, name) => {
     const promise = new Promise((resolve, reject) => {
         db.transaction((tx) => {
-            tx.executeSql(`UPDATE events SET name = ?`,
+            tx.executeSql(`UPDATE events SET name = ? WHERE id = ?`,
             [name, id],
             (_, result) => {
                 console.log('Results', result);

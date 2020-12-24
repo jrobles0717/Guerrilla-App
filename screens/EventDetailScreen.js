@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Image, Text, StyleSheet, Button, FlatList, TextInput, Alert } from 'react-native';
-import MapPreview from '../components/MapPreview';
-import { useDispatch } from 'react-redux';
-import * as eventsActions from '../store/actions/events';
 import * as createEvent from './CreateEventScreen';
+import * as eventsActions from '../store/actions/events';
+
+import { Alert, Button, FlatList, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import React, { useEffect, useState } from 'react';
 
 import Colors from '../constants/Colors';
+import CustomHeaderButton from '../components/CustomHeaderButton';
+import MapPreview from '../components/MapPreview';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 const EventDetailScreen = props => {
@@ -19,7 +22,7 @@ const EventDetailScreen = props => {
         state.events.events.find(event => event.id === eventId)
     );
 
-    const idEvent = JSON.stringify(selectedEvent.id);
+    const idEvent = selectedEvent.id;
 
     useEffect(() =>{
             console.log("selected Event: " + JSON.stringify(selectedEvent));
@@ -229,6 +232,23 @@ const EventDetailScreen = props => {
         // ListFooterComponent={getFooter}
         // />
     );
+};
+
+EventDetailScreen.navigationOptions = (navData) => {
+    return {
+        headerTitle: 'Event Details',
+        headerLeft: () => 
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+            <Item 
+            title="Go Back"
+            iconName={Platform.OS === 'android' ? 'arrow-back' : 'ios-arrow-back'}
+            onPress={() => {
+                navData.navigation.navigate('MainPage');
+            }}
+            color={Colors.sky}
+            />
+        </HeaderButtons>
+    };
 };
 
 const styles = StyleSheet.create({

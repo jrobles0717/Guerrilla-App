@@ -1,14 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { FlatList, StyleSheet, Platform, View, Text } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector, useDispatch } from 'react-redux';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import * as CreateEvent from '../screens/CreateEventScreen';
+import * as eventsActions from '../store/actions/events';
 
+import { FlatList, Platform, StyleSheet, Text, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Colors from '../constants/Colors';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import EventItem from '../components/EventItem';
-import * as eventsActions from '../store/actions/events';
-import Colors from '../constants/Colors';
-import * as CreateEvent from '../screens/CreateEventScreen';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 const MainPageScreen = props => {
     const events = useSelector(state => state.events.events);
